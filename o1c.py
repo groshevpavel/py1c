@@ -19,35 +19,12 @@ import pythoncom
 # import pywintypes
 from win32com.client import Dispatch, DispatchEx, gencache
 
-
-import _query # запросы к 1с в одном файле
-
-
-
 import logging
 import logging.handlers
 _log_level = logging.DEBUG
 _LOGGER_NAME = __name__
 
 _ABSPATH = os.path.dirname(os.path.abspath(__file__))
-
-try:
-    from tango.db.mssql import Database as mssqlDb
-    _no_db = False
-except ImportError:
-    _no_db = True
-
-_DATABASE = {
-    'engine'     : 'mssql',
-    #'base'     : os.path.join(tango.PROJECT_ROOT, tango.PROJECT_NAME + '.db'),
-    'base'       : 'SandBox',
-    'host'       : 'localhost:1433',
-    #'charset'  : 'utf8',
-    'as_dict'    : False,
-    # 'autocommit' : True,
-    'user'       : '',
-    'password'   : ''
-}
 
 
 get1 = lambda obj, attr: getattr(obj, attr.encode('cp1251'))
@@ -601,25 +578,4 @@ class O1c( object ):
 
 
 if __name__ == '__main__':
-    o = O1c(_query._CONN_STRING_TST1)
-
-    o.query(_query.ostatki_sql)
-    # o.setp(ur"НДата", datetime.datetime(2018, 2, 28, 0, 0, 0, 0))
-    # o.setp(ur"КДата", datetime.datetime(2018, 2, 28, 23, 59, 59, 999999))
-    o.execute()
-    
-    
-    print ("\t".join(o.columns))
-        
-
-    for f in o.yield_tuple(is_rownum = True):
-        if f[0] > 5:
-            break
-        
-        print ("\t".join(str(a) for a in f))
-        
-    
-
-    
-    for k,v in o.timings:
-        print (k, v)
+    pass
